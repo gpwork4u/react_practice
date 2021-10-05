@@ -22,7 +22,7 @@ function draw_barchart(svg, radius, data) {
           .innerRadius(radius-30)
           .outerRadius(radius)
         )
-        .attr('fill', function(d){ return(color(d.data[1]))})
+        .attr('fill', function(d){ return(color(d.data[0]))})
         .attr("stroke", "black")
         .style("stroke-width", "2px")
         .style("opacity", 0.7)
@@ -31,7 +31,7 @@ class MoneyView extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {bank:1, test:123};
+        this.state = {money:{'cash':1, 'stock':1}};
         const width = 450,
             height = 450,
             margin = 40;
@@ -51,7 +51,11 @@ class MoneyView extends Component {
         }
         handleChange(event) {
             if (event.target.value !== ''){
-                this.setState({'bank':event.target.value});
+                var money_state = this.state.money;
+                var target_id = event.target.id;
+                money_state[target_id] = event.target.value;
+                console.log(event.target.id +':'+event.target.value)
+                this.setState({'money':money_state});
                 var svg = d3.select("#test")
                 .select("svg").remove();
                 svg = d3.select("#test")
@@ -61,20 +65,25 @@ class MoneyView extends Component {
                 .append("g")
                 .attr("transform", `translate(${450/2}, ${450/2})`);
 
-                draw_barchart(svg, this.radius, this.state);
+                draw_barchart(svg, this.radius, this.state.money);
             }
         }
     render() {
-        let input = null;
-        const {bank} = this.state;
-        input = <input type="number" id="bank" value={bank} onChange={this.handleChange}/>;
+        let input_bank, input_stock;
+        const money_state = this.state.money;
+        input_bank = <input type="number" id="cash" value={money_state['cash']} onChange={this.handleChange}/>;
+        input_stock = <input type="number" id="stock" value={money_state['stock']} onChange={this.handleChange}/>;
+
         return (
             <div>
                 <div>
                     <h1>Todo list</h1>
-                    {input}
+                    {input_bank}
+                    {input_stock}
                     <h1>list</h1>
-                    {this.state.bank}
+                    {money_state['cash']}
+
+
                 </div>
                 <div id='test'>
                 </div>
