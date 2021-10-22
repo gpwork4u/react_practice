@@ -8,6 +8,8 @@ import Todo from './Todo'
 import MoneyView from './MoneyView'
 import Barchart from './chart/barchart'
 import Schedule from './Schedule'
+import Bootstrap from './Bootstrap'
+
 import {
   BrowserRouter as Router,
   Route,
@@ -39,6 +41,9 @@ ReactDOM.render(
         <li>
           <Link to='/Schedule'>Schedule</Link>
         </li>
+        <li>
+          <Link to='/Bootstrap'>Bootstrap</Link>
+        </li>
       </ul>
       <hr/>
       <Route exact path="/" component={App}/>
@@ -48,6 +53,7 @@ ReactDOM.render(
       <Route path="/moneyview" render={props =><MoneyView />} />
       <Route path="/barchart" render={props =><Barchart />} />
       <Route path="/schedule" render={props =><Schedule />} />
+      <Route path="/bootstrap" render={props =><Bootstrap />} />
 
 
     </div>
